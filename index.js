@@ -320,6 +320,16 @@ customTT06 = new (function () {
     var H;
     T.hide();
 
+    cl("111K:", K);
+    cl("111I:", I);
+    cl("111W:", W);
+    cl("111d:", d);
+    cl("111P:", P);
+    cl("111D:", D);
+    cl("111T:", T);
+    cl("111O:", O);
+    cl("111c:", c);
+
     K.find(".chứa").before(
       $("<div>").append(
         $("<div>", {
@@ -327,13 +337,15 @@ customTT06 = new (function () {
           style: "border-bottom-color: #DADADA ",
         }).append(
           $.icon("list: fs2 c0 ma5 bấmĐc").click(function () {
-            cl(11111111, openSideBar);
             if (openSideBar == false) {
               // // Nếu đang mở, ẩn sidebar
               $("#cộtTrái").sửaLớp("-w16 w0 dn");
               $("#cộtTrái").find(".menuContent").sửaLớp("dn");
               $("#cộtTrái").find(".menuIcons").sửaLớp("-dn");
-              $(".arrow_back").sửaLớp("dn");
+              K.find(".arrowBtn").empty();
+              $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("-dn db");
+              $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("-db dn");
+              $("#cộtTrái").find(".menuItemTop").sửaLớp("df w1 -db jcc aic");
               return (openSideBar = !openSideBar);
             } else {
               $("#cộtTrái").sửaLớp("w16 -w0 -dn");
@@ -343,6 +355,12 @@ customTT06 = new (function () {
               $(".arrow_back")
                 .empty()
                 .append($.icon("arrow_forward::fs16 fwb bấmĐc"));
+              K.find(".arrowBtn")
+                .empty()
+                .append($.icon(`arrow_back::fs16 fwb`));
+              $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("dn -db");
+              $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("db -dn");
+              $("#cộtTrái").find(".menuItemTop").sửaLớp("-w1 -df db -jcc -aic");
               return (openSideBar = false);
             }
           }),
@@ -366,7 +384,6 @@ customTT06 = new (function () {
 
     const menuTrai = function (menuCha, O = {}, index) {
       O.cấp = O.cấp || 0;
-
       // Kiểm tra nếu menuCha có subList và subList có phần tử
       const hasChildren =
         (menuCha &&
@@ -403,27 +420,26 @@ customTT06 = new (function () {
           )
         ),
         $("<div>", {
-          class: `menuContent mb10 ptb5 plr10 fwb df jcsb aic bấmĐc brr20 ${
+          class: `menuContent mb10 ptb5 plr10 fwb df jcsb aic  brr20 ${
             hasChildren ? "bgcf bgcyh" : "cf c0h bra25h bgcyh"
           }`,
         }).append(
           $("<div>", { class: "fs09", text: menuCha.title }),
           hasChildren &&
-            $("<div>", { class: "cpi tfs14h" })
+            $("<div>", { class: "cpi tfs14h bấmĐc" })
               .append($.icon("chevron_right:: fs16"))
               .click(function () {
                 const subMenu = result.children(".subMenu");
-                subMenu.slideToggle();
+                const icon = $(this); // Lấy chính icon hiện tại
 
-                // Điều chỉnh icon tùy thuộc vào trạng thái mở/đóng
-                const icon = $(this);
-                icon
-                  .empty()
-                  .append(
+                subMenu.slideToggle(300, function () {
+                  // Cập nhật icon sau khi slideToggle hoàn tất
+                  icon.empty().append(
                     subMenu.is(":visible")
-                      ? $.icon("expand_more:: fs16")
-                      : $.icon("chevron_right:: fs16")
+                      ? $.icon("expand_more:: fs16") // Icon mở rộng
+                      : $.icon("chevron_right:: fs16") // Icon đóng lại
                   );
+                });
               })
         ),
         hasChildren &&
@@ -439,7 +455,7 @@ customTT06 = new (function () {
 
     const menuTraiTren = function (item, index) {
       return $("<div>", {
-        class: `ptb5 plr15 menuItemTop fwb fs09 c0 bgcyh bra10 db wfc bấmĐc mt5 ml-10 bóng `,
+        class: `ptb5 plr15 menuItemTop fwb fs09 c0 bgcyh bra10 df jcc aic bấmĐc mt5 ml-10 bóng tac`,
 
         style: `zIndex: "${index}"; background-color: ${
           index == 0 ? "#ED9718" : "#fff"
@@ -503,7 +519,7 @@ customTT06 = new (function () {
           // }
           phânTrang: true, // Hiển thị phân trang
           nútBỏ: ["đóngKhung"],
-          // sửaĐc:false,
+          // sửaĐc:false, 
           tảiDần: true, // Hiển thị tải dần
           trống: true,
           sửaLớp: {
@@ -523,46 +539,71 @@ customTT06 = new (function () {
         H.find("#b7c6d0346dc928517d84a2cdb2201051 > tbody").css({
           "font-size": "14px",
         });
+
+        H.find(".header")
+          .children("td:nth-child(2)")
+          .append(
+            $("<div>", {
+              class: " bấmĐc vamc bra5 pr boChọn",
+            }).append(
+              $.icon(
+                "check_box_outline_blank:: ffi usn bra3 tac fsn notranslate wh1e oh bscb dfn fs16 O vam mt-1"
+              ),
+              $("<input>", {
+                type: "checkbox",
+                class: "chọnDòng chọnTất chọnHếtDòng iCheck o0 ol bấmĐc",
+              }).tip("Chọn/Bỏ chọn tất cả dòng")
+            )
+          );
+
         H.find(".thêmDòng").after(
           $.icon(
             "library_add::ffi usn bra3 tac fsn wh1e oh bscb dfn thêmNhiềuDòng bấmĐc fs16 mlr5 fwb"
           ).tip("Thêm nhiều dòng")
         );
         H.find(".bộLọc").sửaLớp("dn");
-        H.find(".trên").find(".sốTrang").parents().sửaLớp("w1");
+        H.find(".trên").find(".sốTrang").closest(".df").sửaLớp("w1 plr15");
         H.find(".trên")
           .find(".sốTrang")
           .before(
-            $("<div>", { class: "cpi arrow_back ml10 col-xs-4" })
+            $("<div>", { class: "col-xs-4" })
               .empty()
-              .append($.icon("arrow_back::fs16 fwb bấmĐc"))
-              .click(function () {
-                if (!openSideBar) {
-                  $(this)
-                    .empty()
-                    .append($.icon("arrow_forward::fs16 fwb bấmĐc"));
-                  $("#cộtTrái").sửaLớp("-w16 w5");
-                  $("#cộtTrái").find(".menuContent").sửaLớp("dn");
-                  $("#cộtTrái").find(".menuIcons").sửaLớp("-dn");
-                  $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("-dn db");
-                  $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("-db dn");
-                  $("#cộtTrái").find(".menuItemTop").sửaLớp("w1");
-                  // return openSideBar == false
-                } else {
-                  $(this).empty().append($.icon("arrow_back::fs16 fwb bấmĐc"));
-                  $("#cộtTrái").sửaLớp("-w5 w16 -dn");
-                  $("#cộtTrái").find(".menuContent").sửaLớp("-dn");
-                  $("#cộtTrái").find(".menuIcons").sửaLớp("dn");
-                  $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("dn -db");
-                  $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("db -dn");
-                  $("#cộtTrái").find(".menuItemTop").sửaLớp("-w1");
-                }
-                return (openSideBar = !openSideBar);
-              }),
+              .append(
+                $("<div>", { class: "bấmĐc db arrowBtn wfc" })
+                  .append($.icon(`arrow_back::fs16 fwb`))
+                  .click(function () {
+                    if (!openSideBar) {
+                      $(this).empty().append($.icon(`arrow_forward::fs16 fwb`));
+                      $("#cộtTrái").sửaLớp("-w16 w5");
+                      $("#cộtTrái").find(".menuContent").sửaLớp("dn");
+                      $("#cộtTrái").find(".menuIcons").sửaLớp("-dn");
+                      $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("-dn db");
+                      $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("-db dn");
+                      $("#cộtTrái")
+                        .find(".menuItemTop")
+                        .sửaLớp("df w1 -db jcc aic");
+                      $("#cộtTrái").find(".subMenu").slideUp();
+                      // return openSideBar == false
+                    } else {
+                      $(this)
+                        .empty()
+                        .append($.icon("arrow_back::fs16 fwb bấmĐc"));
+                      $("#cộtTrái").sửaLớp("-w5 w16 -dn");
+                      $("#cộtTrái").find(".menuContent").sửaLớp("-dn");
+                      $("#cộtTrái").find(".menuIcons").sửaLớp("dn");
+                      $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("dn -db");
+                      $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("db -dn");
+                      $("#cộtTrái")
+                        .find(".menuItemTop")
+                        .sửaLớp("-w1 -df db -jcc -aic");
+                    }
+                    return (openSideBar = !openSideBar);
+                  })
+              ),
             $("<div>", { class: "df col-xs-4" }).append(
               menuHeaderTop.map(function (item, index) {
                 return $("<div>", {
-                  class: `df aic bra5 plr10 ptb5 bấmĐc itemMenuHeaderTop ${
+                  class: `df aic jcsb bra5 plr10 ptb5 bấmĐc itemMenuHeaderTop ${
                     index == 0 ? `cf` : `c0`
                   }`,
                   style: `background-color: ${
@@ -603,10 +644,10 @@ customTT06 = new (function () {
         );
 
         H.find(".trên").append(
-          $("<div>", { class: "w1 pl40 df jcsb aic mb10" }).append(
+          $("<div>", { class: "w1 pl25 df jcsb aic mb10 mt25" }).append(
             $("<div>", { class: "df jcsb fww w80" }).append(
               listMenuTableHeader.map(function (item, index) {
-                return $("<div>", { class: "df fs09 w20 wsn" }).append(
+                return $("<div>", { class: "df fs09 w16 wsn mr15" }).append(
                   $("<div>", { class: "", text: `${index + 1}. ` }),
                   $("<div>", { class: "", text: item.title }),
                   $("<div>", {
@@ -629,9 +670,9 @@ customTT06 = new (function () {
                 }
                 return (viewNgang = !viewNgang);
               }),
-              $.icon("sticky_note_2:: fs2 bấmĐc mr5"),
-              $.icon("download:: fs2 bấmĐc mr5"),
-              $.icon("delete:: fs2 bấmĐc")
+              $.icon("sticky_note_2:: fs2 bấmĐc mr5").tip("Nhân bản"),
+              $.icon("download:: fs2 bấmĐc mr5").tip("Tải xuống"),
+              $.icon("delete:: fs2 bấmĐc").tip("Xoá bảng")
             )
           )
         );
