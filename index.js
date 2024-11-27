@@ -312,23 +312,21 @@ customTT06 = new (function () {
     },
   ];
 
-  this.cấuHình = function (K, I, W, d, P, D, T, O, c) {
+  this.cấuHình = function (K, I, W, T) {
     var T = $(this);
-    var open = false;
     var openSideBar = false;
     var viewNgang = false;
     var H;
     T.hide();
 
-    cl("111K:", K);
-    cl("111I:", I);
-    cl("111W:", W);
-    cl("111d:", d);
-    cl("111P:", P);
-    cl("111D:", D);
-    cl("111T:", T);
-    cl("111O:", O);
-    cl("111c:", c);
+    $("#đầu").sửaLớp("-bg1g1").css({
+      "background-color": "#1A1499",
+    });
+
+    $("#đầu").find(".bgcf").sửaLớp("w20");
+    $("#slogan .trên").text("GOLDSUN FOCUS MEDIA").css({
+      color: "#1A1919",
+    });
 
     K.find(".chứa").before(
       $("<div>").append(
@@ -401,7 +399,7 @@ customTT06 = new (function () {
           }).append(
             $("<div>", {
               class: `ptb15 plr5 fwb brr20 cf`,
-              style: "width:260px",
+              // style: "width:260px",
             }).append(
               $("<div>", { class: "" }).append(
                 $("<div>", {
@@ -420,7 +418,7 @@ customTT06 = new (function () {
           )
         ),
         $("<div>", {
-          class: `menuContent mb10 ptb5 plr10 fwb df jcsb aic  brr20 ${
+          class: `menuContent bấmĐc mb10 ptb5 plr10 fwb df jcsb aic brr20 ${
             hasChildren ? "bgcf bgcyh" : "cf c0h bra25h bgcyh"
           }`,
         }).append(
@@ -431,7 +429,6 @@ customTT06 = new (function () {
               .click(function () {
                 const subMenu = result.children(".subMenu");
                 const icon = $(this); // Lấy chính icon hiện tại
-
                 subMenu.slideToggle(300, function () {
                   // Cập nhật icon sau khi slideToggle hoàn tất
                   icon.empty().append(
@@ -449,14 +446,12 @@ customTT06 = new (function () {
             })
           )
       );
-
       return result;
     };
 
     const menuTraiTren = function (item, index) {
       return $("<div>", {
         class: `ptb5 plr15 menuItemTop fwb fs09 c0 bgcyh bra10 df jcc aic bấmĐc mt5 ml-10 bóng tac`,
-
         style: `zIndex: "${index}"; background-color: ${
           index == 0 ? "#ED9718" : "#fff"
         }`,
@@ -519,7 +514,7 @@ customTT06 = new (function () {
           // }
           phânTrang: true, // Hiển thị phân trang
           nútBỏ: ["đóngKhung"],
-          // sửaĐc:false, 
+          // sửaĐc:false,
           tảiDần: true, // Hiển thị tải dần
           trống: true,
           sửaLớp: {
@@ -539,7 +534,13 @@ customTT06 = new (function () {
         H.find("#b7c6d0346dc928517d84a2cdb2201051 > tbody").css({
           "font-size": "14px",
         });
-
+        H.find(".bộLọc").sửaLớp("dn");
+        H.find(".trên").find(".sốTrang").closest(".df").sửaLớp("w1 plr15");
+        H.find(".thêmDòng").after(
+          $.icon(
+            "library_add::ffi usn bra3 tac fsn wh1e oh bscb dfn thêmNhiềuDòng bấmĐc fs16 mlr5 fwb"
+          ).tip("Thêm nhiều dòng")
+        );
         H.find(".header")
           .children("td:nth-child(2)")
           .append(
@@ -555,14 +556,6 @@ customTT06 = new (function () {
               }).tip("Chọn/Bỏ chọn tất cả dòng")
             )
           );
-
-        H.find(".thêmDòng").after(
-          $.icon(
-            "library_add::ffi usn bra3 tac fsn wh1e oh bscb dfn thêmNhiềuDòng bấmĐc fs16 mlr5 fwb"
-          ).tip("Thêm nhiều dòng")
-        );
-        H.find(".bộLọc").sửaLớp("dn");
-        H.find(".trên").find(".sốTrang").closest(".df").sửaLớp("w1 plr15");
         H.find(".trên")
           .find(".sốTrang")
           .before(
