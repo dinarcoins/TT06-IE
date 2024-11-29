@@ -354,41 +354,46 @@ customTT06 = new (function () {
           class: "h40 w1 df aic jcsb bgcf bbw5 bbss bss",
           style: "border-bottom-color: #DADADA ",
         }).append(
-          $.icon("list: fs2 c0 ma5 bấmĐc").click(function () {
-            if (openSideBar == false) {
-              // // Nếu đang mở, ẩn sidebar
-              $("#cộtTrái").sửaLớp("-w16 w0 dn");
-              $("#cộtTrái").find(".menuContent").sửaLớp("dn");
-              $("#cộtTrái").find(".menuIcons").sửaLớp("-dn");
-              K.find(".arrowBtn").empty();
-              $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("-dn db");
-              $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("-db dn");
-              $("#cộtTrái").find(".menuItemTop").sửaLớp("df w1 -db jcc aic");
-              return (openSideBar = !openSideBar);
-            } else {
-              $("#cộtTrái").sửaLớp("w16 -w0 -dn");
-              $("#cộtTrái").find(".menuContent").sửaLớp("-dn");
-              $("#cộtTrái").find(".menuIcons").sửaLớp("dn");
-              $(".arrow_back").sửaLớp("-dn");
-              $(".arrow_back")
-                .empty()
-                .append($.icon("arrow_forward::fs16 fwb bấmĐc"));
-              K.find(".arrowBtn")
-                .empty()
-                .append($.icon(`arrow_back::fs16 fwb`));
-              $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("dn -db");
-              $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("db -dn");
-              $("#cộtTrái").find(".menuItemTop").sửaLớp("-w1 -df db -jcc -aic");
-              return (openSideBar = false);
-            }
-          }),
+          $.icon("list: fs2 ma5 bấmĐc")
+            .css({
+              color: "#001793",
+            })
+            .click(function () {
+              if (openSideBar == false) {
+                // // Nếu đang mở, ẩn sidebar
+                $("#cộtTrái").sửaLớp("-w16 w0 dn");
+                $("#cộtTrái").find(".menuContent").sửaLớp("dn");
+                $("#cộtTrái").find(".menuIcons").sửaLớp("-dn");
+                K.find(".arrowBtn").empty();
+                $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("-dn db");
+                $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("-db dn");
+                $("#cộtTrái").find(".menuItemTop").sửaLớp("df w1 -db jcc aic");
+                return (openSideBar = !openSideBar);
+              } else {
+                $("#cộtTrái").sửaLớp("w16 -w0 -dn");
+                $("#cộtTrái").find(".menuContent").sửaLớp("-dn");
+                $("#cộtTrái").find(".menuIcons").sửaLớp("dn");
+                $(".arrow_back").sửaLớp("-dn");
+                $(".arrow_back")
+                  .empty()
+                  .append($.icon("arrow_forward::fs16 fwb bấmĐc"));
+                K.find(".arrowBtn")
+                  .empty()
+                  .append($.icon(`arrow_back::fs16 fwb`));
+                $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("dn -db");
+                $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("db -dn");
+                $("#cộtTrái")
+                  .find(".menuItemTop")
+                  .sửaLớp("-w1 -df db -jcc -aic");
+                return (openSideBar = false);
+              }
+            }),
           $.icon("close: fs2 c0 ma5 bấmĐc").click(function () {
             $("#bảngb7c6d0346dc928517d84a2cdb2201051").trigger("đóng");
           })
         )
       )
     );
-
     W.find("#chứaBảng").sửaLớp("-oa");
     W.find("#chứaBảng").children("div").first().sửaLớp("dn");
     W.find("#chứaBảng").find(".nútPhải").sửaLớp("dn");
@@ -566,7 +571,7 @@ customTT06 = new (function () {
             class: "plr15 ptb5 bra15 fs09 mr5 db bấmĐc listMenuPhuItem",
             text: item.title,
             style: `background-color: ${index == 0 ? `#ED9718` : `#DEDEDE`};
-            color: '#5B5B5B'
+            color: ${index == 0 ? "#FFF" : "#5B5B5B"} 
             `,
           }).click(function () {
             $(".listMenuPhuItem").css({
@@ -626,7 +631,7 @@ customTT06 = new (function () {
               style: `background-color: ${index == 0 ? `#1E6AFF` : `#DEDEDE`};`,
             })
               .append(
-                $.icon(`${item.icon}:: fs09`),
+                $.icon(`${item.icon}:: fs09 iconMenuHeaderTop`),
                 $("<div>", { class: "fs09 ml5", text: item.title })
               )
               .click(function () {
