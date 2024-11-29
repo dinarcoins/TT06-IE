@@ -22,13 +22,6 @@ customTT06 = new (function () {
               title: "1.1.1 Miền Bắc",
               icon: "",
               f: function () {},
-              subList: [
-                {
-                  title: "1.1.1.1 Miền Bắc",
-                  icon: "",
-                  f: function () {},
-                },
-              ],
             },
             {
               title: "1.1.2 Miền Trung",
@@ -63,11 +56,35 @@ customTT06 = new (function () {
           title: "2.1 Bản đồ dạng sóng",
           icon: "",
           f: function () {},
+          subList: [
+            {
+              title: "2.1.1 Sóng dạng ngang",
+              icon: "",
+              f: function () {},
+            },
+            {
+              title: "2.1.2 Sóng dạng dọc",
+              icon: "",
+              f: function () {},
+            },
+          ],
         },
         {
           title: "2.2 Bản đồ dạng khác",
           icon: "",
           f: function () {},
+          subList: [
+            {
+              title: "2.2.1 Bản đồ dạng nến",
+              icon: "",
+              f: function () {},
+            },
+            {
+              title: "2.2.2 Bản đồ dạng tròn",
+              icon: "",
+              f: function () {},
+            },
+          ],
         },
       ],
     },
@@ -312,19 +329,22 @@ customTT06 = new (function () {
     },
   ];
 
-  this.cấuHình = function (K, I, W, T) {
-    var T = $(this);
+  this.cấuHình = function (K, I, W) {
+    // K: khung bảng chứa
+    // I: id của bảng, là mã md5
+    // W: bảngChứa
+    // i là 1 hoặc nhiều id đối tượng. i có thể là 1234, i → [1234,2346,3567]
     var openSideBar = false;
     var viewNgang = false;
-    var H;
-    T.hide();
 
     $("#đầu").sửaLớp("-bg1g1").css({
-      "background-color": "#1A1499",
+      background: "rgb(4,8,149)",
+      background:
+        "linear-gradient(90deg, rgba(4,8,149,1) 0%, rgba(66,95,250,1) 100%)",
     });
 
     $("#đầu").find(".bgcf").sửaLớp("w20");
-    $("#slogan .trên").text("GOLDSUN FOCUS MEDIA").css({
+    $("#slogan .trên").iVal("GOLDSUN FOCUS MEDIA").sửaLớp("fs15p").css({
       color: "#1A1919",
     });
 
@@ -369,16 +389,32 @@ customTT06 = new (function () {
       )
     );
 
-    H = W.find("#chứaBảng").find(".chứa").empty();
     W.find("#chứaBảng").sửaLớp("-oa");
     W.find("#chứaBảng").children("div").first().sửaLớp("dn");
+    W.find("#chứaBảng").find(".nútPhải").sửaLớp("dn");
+    W.find("#chứaBảng").find(".bộLọc").sửaLớp("dn");
+    W.find(`tfoot`).sửaLớp("dn");
+    W.find("#" + I)
+      .find("td")
+      .sửaLớp("fwn fs12p -fs14p -ptb10")
+      .css({
+        paddingTop: "15px",
+        paddingBottom: "15px",
+        color: "#575B64",
+      });
+    W.find("#chứaBảng").find(".tiêuĐềBảng").sửaLớp("-cl1 -fs11 fs14").css({
+      color: "#0F53BA",
+    });
     W.find("#cộtTrái").sửaLớp(
       "-dne -bgcfx -br1 -bsda pb35 pr br3 bss bc9 w16 koCuộn pt10 plr5"
     );
     W.find("#cộtTrái").css({
-      "background-color":
+      background: "rgb(2,11,96)",
+      background:
         "linear-gradient(180deg, rgba(2,11,96,1) 0%, rgba(33,44,143,1) 100%)",
     });
+
+    W.find("#chứaBảng").find(".dưới").sửaLớp("dn");
 
     const menuTrai = function (menuCha, O = {}, index) {
       O.cấp = O.cấp || 0;
@@ -399,7 +435,6 @@ customTT06 = new (function () {
           }).append(
             $("<div>", {
               class: `ptb15 plr5 fwb brr20 cf`,
-              // style: "width:260px",
             }).append(
               $("<div>", { class: "" }).append(
                 $("<div>", {
@@ -418,9 +453,9 @@ customTT06 = new (function () {
           )
         ),
         $("<div>", {
-          class: `menuContent bấmĐc mb10 ptb5 plr10 fwb df jcsb aic brr20 ${
+          class: `menuContent bấmĐc mb5 ptb5 plr10 fwb df jcsb aic brr20 ${
             hasChildren ? "bgcf bgcyh" : "cf c0h bra25h bgcyh"
-          }`,
+          } ${O.cấp === 0 && "mb15"}`,
         }).append(
           $("<div>", { class: "fs09", text: menuCha.title }),
           hasChildren &&
@@ -478,255 +513,272 @@ customTT06 = new (function () {
     };
 
     W.find("#cộtTrái").append(
-      $("<div>", { class: "df fww jcfe" }).append(
+      $("<div>", { class: "df fww jcfe mb15" }).append(
         dataMenuTraiTren.map(menuTraiTren)
       ),
-      $("<div>", { class: "ptb15" }).append(renderMenu(dataMenuTrai))
+      renderMenu(dataMenuTrai)
     );
 
-    H.bảng(
-      I,
-      {
-        // tiêuĐề:
-        //   "THEO DÕI KẾ HOẠCH CHẠY VÀ GIÁ TRỊ HỢP ĐỒNG (Giao diện xem 1 HĐ dạng dọc) ", // Tiêu đề bảng
-        cỡChữ: 12, // Cỡ chữ hiển thị trên toàn khung
-        mới: true, // Bảng kiểu mới
-        chân: false, // Chân bảng
-        khung: true, // Hiển thị khung → Nếu false → chỉ lần phần chứa giao diện khung bảng trở vào
-        href: false, // Không hiển thị URL
-        // cộtGộp: ộ, // Gộp đè cấu hình cột
-        // cộts:$.gộp(["chọn","chứcNăng","stt"],$.map(ộ,r2).slice(1)), // Danh sách ID cột cần hiển thị
-        nútBỏ: [], // Danh sách nút mặc định trên bảng cần loại bỏ
-        // ẩnCột:true,
-        ấ: {
-          // Cấu hình chung khung chứa
-        },
-        bảng: {
-          // Cấu hình bảng
-          mãNguồn: 1,
-          // { // Viết lại mã nguồn. hoặc xác định sử dụng mã nguồn
-          //     1:function(){
-          //         // Mã nguồn khởi tạo
-          //     },
-          //     // 2:function(){
-          //     //     // Mã nguồn thực thi
-          //     // },
-          // }
-          phânTrang: true, // Hiển thị phân trang
-          nútBỏ: ["đóngKhung"],
-          // sửaĐc:false,
-          tảiDần: true, // Hiển thị tải dần
-          trống: true,
-          sửaLớp: {
-            h400e: "lh13,-lh12",
-            nútTrái2: "lh13,df,aic",
-            tiêuĐềBảng: "-cl1,fs14,cb0,-ptb10",
-            giữa: "mr25",
-            dòng: "fs09",
-          },
-          ẩnCột: true,
-        },
-      },
-      function () {
-        // cl("LOG", "Cấu hình xong bảng", $(this));koIn. wmxc
-        H.find("#b7c6d0346dc928517d84a2cdb2201051").sửaLớp("wmxc");
-        H.find("#b7c6d0346dc928517d84a2cdb2201051 > tfoot").sửaLớp("dn");
-        H.find("#b7c6d0346dc928517d84a2cdb2201051 > tbody").css({
-          "font-size": "14px",
-        });
-        H.find(".bộLọc").sửaLớp("dn");
-        H.find(".trên").find(".sốTrang").closest(".df").sửaLớp("w1 plr15");
-        H.find(".thêmDòng").after(
-          $.icon(
-            "library_add::ffi usn bra3 tac fsn wh1e oh bscb dfn thêmNhiềuDòng bấmĐc fs16 mlr5 fwb"
-          ).tip("Thêm nhiều dòng")
-        );
-        H.find(".header")
-          .children("td:nth-child(2)")
-          .append(
-            $("<div>", {
-              class: " bấmĐc vamc bra5 pr boChọn",
-            }).append(
-              $.icon(
-                "check_box_outline_blank:: ffi usn bra3 tac fsn notranslate wh1e oh bscb dfn fs16 O vam mt-1"
-              ),
-              $("<input>", {
-                type: "checkbox",
-                class: "chọnDòng chọnTất chọnHếtDòng iCheck o0 ol bấmĐc",
-              }).tip("Chọn/Bỏ chọn tất cả dòng")
-            )
-          );
-        H.find(".trên")
-          .find(".sốTrang")
-          .before(
-            $("<div>", { class: "col-xs-4" })
-              .empty()
-              .append(
-                $("<div>", { class: "bấmĐc db arrowBtn wfc" })
-                  .append($.icon(`arrow_back::fs16 fwb`))
-                  .click(function () {
-                    if (!openSideBar) {
-                      $(this).empty().append($.icon(`arrow_forward::fs16 fwb`));
-                      $("#cộtTrái").sửaLớp("-w16 w5");
-                      $("#cộtTrái").find(".menuContent").sửaLớp("dn");
-                      $("#cộtTrái").find(".menuIcons").sửaLớp("-dn");
-                      $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("-dn db");
-                      $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("-db dn");
-                      $("#cộtTrái")
-                        .find(".menuItemTop")
-                        .sửaLớp("df w1 -db jcc aic");
-                      $("#cộtTrái").find(".subMenu").slideUp();
-                      // return openSideBar == false
-                    } else {
-                      $(this)
-                        .empty()
-                        .append($.icon("arrow_back::fs16 fwb bấmĐc"));
-                      $("#cộtTrái").sửaLớp("-w5 w16 -dn");
-                      $("#cộtTrái").find(".menuContent").sửaLớp("-dn");
-                      $("#cộtTrái").find(".menuIcons").sửaLớp("dn");
-                      $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("dn -db");
-                      $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("db -dn");
-                      $("#cộtTrái")
-                        .find(".menuItemTop")
-                        .sửaLớp("-w1 -df db -jcc -aic");
-                    }
-                    return (openSideBar = !openSideBar);
-                  })
-              ),
-            $("<div>", { class: "df col-xs-4" }).append(
-              menuHeaderTop.map(function (item, index) {
-                return $("<div>", {
-                  class: `df aic jcsb bra5 plr10 ptb5 bấmĐc itemMenuHeaderTop ${
-                    index == 0 ? `cf` : `c0`
-                  }`,
-                  style: `background-color: ${
-                    index == 0 ? `#1E6AFF` : `#DEDEDE`
-                  };`,
-                })
-                  .append(
-                    $.icon(`${item.icon}:: fs09`),
-                    $("<div>", { class: "fs09 ml5", text: item.title })
-                  )
-                  .click(function () {
-                    $(".itemMenuHeaderTop").sửaLớp("-cf c0");
-                    $(".itemMenuHeaderTop").css({
-                      "background-color": "#DEDEDE",
-                    });
-                    $(this).sửaLớp("bgcb cf -c0");
-                    $(this).css({ "background-color": "#1E6AFF" });
-                  });
-              })
-            )
-          );
+    W.find(".thêmDòng").after(
+      $.icon(
+        "library_add::ffi usn bra3 tac fsn wh1e oh bscb dfn thêmNhiềuDòng bấmĐc fs16 mlr5 fwb"
+      ).tip("Thêm nhiều dòng")
+    );
 
-        H.find(".checkCột").before(
-          $("<div>", { class: "w1 df ml25" }).append(
-            listMenuPhu.map(function (item, index) {
-              return $("<div>", {
-                class: "plr15 ptb5 bra15 fs09 mr5 db c0 bấmĐc listMenuPhuItem",
-                text: item.title,
-                style: `background-color: ${
-                  index == 0 ? `#ED9718` : `#DEDEDE`
-                } `,
-              }).click(function () {
-                $(".listMenuPhuItem").css({ "background-color": "#DEDEDE" });
-                $(this).css({ "background-color": "#ED9718" });
-              });
-            })
-          )
-        );
-
-        H.find(".trên").append(
-          $("<div>", { class: "w1 pl25 df jcsb aic mb10 mt25" }).append(
-            $("<div>", { class: "df jcsb fww w80" }).append(
-              listMenuTableHeader.map(function (item, index) {
-                return $("<div>", { class: "df fs09 w16 wsn mr15" }).append(
-                  $("<div>", { class: "", text: `${index + 1}. ` }),
-                  $("<div>", { class: "", text: item.title }),
-                  $("<div>", {
-                    class: "fwb",
-                    text: item.chữ,
-                    style: `color: ${item.màu}`,
-                  })
-                );
-              })
-            ),
-            $("<div>", { class: "df aic pr10" }).append(
+    W.find(".trên").append(
+      $("<div>", { class: "w1 pl25 df jcsb aic mb10 mt15" }).append(
+        $("<div>", { class: "df jcsb fww w80" }).append(
+          listMenuTableHeader.map(function (item, index) {
+            return $("<div>", { class: "df fs09 w16 wsn mr15 mt5" }).append(
+              $("<div>", { class: "", text: `${index + 1}. ` }),
+              $("<div>", { class: "", text: item.title }),
               $("<div>", {
-                class: "wfc plr10 ptb5 bóng fs07 c0 bgcgl bấmĐc bra5 mr5",
-                text: "view ngang",
-              }).click(function () {
-                if (viewNgang) {
-                  $(this).sửaLớp("bgcgl");
-                } else {
-                  $(this).sửaLớp("-bgcgl");
-                }
-                return (viewNgang = !viewNgang);
-              }),
-              $.icon("sticky_note_2:: fs2 bấmĐc mr5").tip("Nhân bản"),
-              $.icon("download:: fs2 bấmĐc mr5").tip("Tải xuống"),
-              $.icon("delete:: fs2 bấmĐc").tip("Xoá bảng")
-            )
-          )
-        );
-
-        H.find(".nútTrái2").append(
+                class: "fwb",
+                text: item.chữ,
+                style: `color: ${item.màu}`,
+              })
+            );
+          })
+        ),
+        $("<div>", { class: "df aic pr10" }).append(
           $("<div>", {
-            class: "bấmĐc ml15 dib plr10 ptb5 fs09 tac c6 bcd bss bl1 w130",
-            text: "Mã Booking",
-          }).sổ(listBookings, {
-            // nhãn: "Vui lòng chọn",
-            sẵn: "", // Giá trị sẵn có
-            ngay: true, // Đổi ngay giá trị
-            gõ: true, // Tạo ô nhập tìm kiếm
-            trống: false,
-            bo: "-bsi -b1sd -bra3",
-            đổi: function (á) {
-              cl("LOG____ giá trị", á);
-            },
+            class: "wfc plr10 ptb5 bóng fs07 c0 bgcgl bấmĐc bra5 mr5",
+            text: "view ngang",
+          }).click(function () {
+            if (viewNgang) {
+              $(this).sửaLớp("bgcgl");
+            } else {
+              $(this).sửaLớp("-bgcgl");
+            }
+            return (viewNgang = !viewNgang);
           }),
-          $("<div>", {
-            class: "bấmĐc ml15 dib plr10 ptb5 fs09 tac c6 bcd bss bl1 w130",
-            text: "Mã Khách Hàng",
-          }).sổ(listClients, {
-            // nhãn: "Vui lòng chọn",
-            sẵn: "", // Giá trị sẵn có
-            ngay: true, // Đổi ngay giá trị
-            gõ: true, // Tạo ô nhập tìm kiếm
-            trống: false,
-            bo: "-bsi -b1sd -bra3",
-            đổi: function (á) {
-              cl("LOG____ giá trị", á);
-            },
-          }),
-          $("<div>", {
-            class: "ml15 df aic plr5 ptb5 fs09 tac c6 bcd bss bl1",
-          }).append(
-            $("<div>", { class: "fs1 c6 mlr15", text: "Date range    From" }),
-            $("<div>", {
-              class: "fs1 plr15 ptb5 bgcs bấmĐc bra10 cp",
-            }).chọnNgày({
-              nổi: true, //lựa chọn này thể hiện có cho làm nổi thời gian hay không
-              ẩn: ["giờ", "phút", "giây"], // lựa chọn này để ẩn đi giờ phút giây, có thể cho ẩn đi để hiện giờ
-              địnhDạng: "DD/MM/YYYY", //đây là chọn định dạng ngày/tháng/năm
-              mặcĐịnh: now().u, //đây là nơi cho lựa chọn ngày mặc định hiển thị
-              quáKhứ: true, //đây là nơi cho lựa chọn ngày trong quá khứ
-            }),
-            $("<div>", { class: "fs1 c6 mlr15", text: "To" }),
-            $("<div>", {
-              class: "fs1 plr15 ptb5 bgcs bấmĐc bra10 cp",
-            }).chọnNgày({
-              nổi: true, //lựa chọn này thể hiện có cho làm nổi thời gian hay không
-              ẩn: ["giờ", "phút", "giây"], // lựa chọn này để ẩn đi giờ phút giây, có thể cho ẩn đi để hiện giờ
-              địnhDạng: "DD/MM/YYYY", //đây là chọn định dạng ngày/tháng/năm
-              mặcĐịnh: now().u, //đây là nơi cho lựa chọn ngày mặc định hiển thị
-              quáKhứ: true, //đây là nơi cho lựa chọn ngày trong quá khứ
-            })
-          ),
-          $.icon("search:: pa5 fs16 bra50i btn bấmĐc ml25")
-        );
-      }
+          $.icon("sticky_note_2:: fs2 bấmĐc mr5").tip("Nhân bản"),
+          $.icon("download:: fs2 bấmĐc mr5").tip("Tải xuống"),
+          $.icon("delete:: fs2 bấmĐc").tip("Xoá bảng")
+        )
+      )
     );
+
+    W.find(".checkCột").before(
+      $("<div>", { class: "w1 df ml25" }).append(
+        listMenuPhu.map(function (item, index) {
+          return $("<div>", {
+            class: "plr15 ptb5 bra15 fs09 mr5 db bấmĐc listMenuPhuItem",
+            text: item.title,
+            style: `background-color: ${index == 0 ? `#ED9718` : `#DEDEDE`};
+            color: '#5B5B5B'
+            `,
+          }).click(function () {
+            $(".listMenuPhuItem").css({
+              backgroundColor: "#DEDEDE",
+              color: "#5B5B5B",
+            });
+            $(this).css({
+              backgroundColor: "#ED9718",
+              color: "#FFF",
+            });
+          });
+        })
+      )
+    );
+
+    W.find(".trên")
+      .find(".sốTrang")
+      .before(
+        $("<div>", { class: "col-xs-4" })
+          .empty()
+          .append(
+            $("<div>", { class: "bấmĐc db arrowBtn wfc" })
+              .append($.icon(`arrow_back::fs16 fwb`))
+              .click(function () {
+                if (!openSideBar) {
+                  $(this).empty().append($.icon(`arrow_forward::fs16 fwb`));
+                  $("#cộtTrái").sửaLớp("-w16 w5");
+                  $("#cộtTrái").find(".menuContent").sửaLớp("dn");
+                  $("#cộtTrái").find(".menuIcons").sửaLớp("-dn");
+                  $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("-dn db");
+                  $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("-db dn");
+                  $("#cộtTrái")
+                    .find(".menuItemTop")
+                    .sửaLớp("df w1 -db jcc aic");
+                  $("#cộtTrái").find(".subMenu").slideUp();
+                  // return openSideBar == false
+                } else {
+                  $(this).empty().append($.icon("arrow_back::fs16 fwb bấmĐc"));
+                  $("#cộtTrái").sửaLớp("-w5 w16 -dn");
+                  $("#cộtTrái").find(".menuContent").sửaLớp("-dn");
+                  $("#cộtTrái").find(".menuIcons").sửaLớp("dn");
+                  $("#cộtTrái").find(".menuTraiTrenIcon").sửaLớp("dn -db");
+                  $("#cộtTrái").find(".menuTraiTrenText").sửaLớp("db -dn");
+                  $("#cộtTrái")
+                    .find(".menuItemTop")
+                    .sửaLớp("-w1 -df db -jcc -aic");
+                }
+                return (openSideBar = !openSideBar);
+              })
+          ),
+        $("<div>", { class: "df col-xs-4" }).append(
+          menuHeaderTop.map(function (item, index) {
+            return $("<div>", {
+              class: `df aic jcsb bra5 plr10 ptb5 bấmĐc itemMenuHeaderTop ${
+                index == 0 ? `cf` : `c0`
+              }`,
+              style: `background-color: ${index == 0 ? `#1E6AFF` : `#DEDEDE`};`,
+            })
+              .append(
+                $.icon(`${item.icon}:: fs09`),
+                $("<div>", { class: "fs09 ml5", text: item.title })
+              )
+              .click(function () {
+                $(".itemMenuHeaderTop").sửaLớp("-cf c0");
+                $(".itemMenuHeaderTop").css({
+                  "background-color": "#DEDEDE",
+                });
+                $(this).sửaLớp("bgcb cf -c0");
+                $(this).css({ "background-color": "#1E6AFF" });
+              });
+          })
+        )
+      );
+
+    W.find(".nútTrái2")
+      .sửaLớp("df")
+      .append(
+        $("<div>", {
+          class: "bấmĐc ml15 dib plr10 ptb5 fs09 tac c6 bcd bss bl1 w130",
+          text: "Mã Booking",
+        }).sổ(listBookings, {
+          // nhãn: "Vui lòng chọn",
+          sẵn: "", // Giá trị sẵn có
+          ngay: true, // Đổi ngay giá trị
+          gõ: true, // Tạo ô nhập tìm kiếm
+          trống: false,
+          bo: "-bsi -b1sd -bra3",
+          đổi: function (á) {
+            cl("LOG____ giá trị", á);
+          },
+        }),
+        $("<div>", {
+          class: "bấmĐc ml15 dib plr10 ptb5 fs09 tac c6 bcd bss bl1 w130",
+          text: "Mã Khách Hàng",
+        }).sổ(listClients, {
+          // nhãn: "Vui lòng chọn",
+          sẵn: "", // Giá trị sẵn có
+          ngay: true, // Đổi ngay giá trị
+          gõ: true, // Tạo ô nhập tìm kiếm
+          trống: false,
+          bo: "-bsi -b1sd -bra3",
+          đổi: function (á) {
+            cl("LOG____ giá trị", á);
+          },
+        }),
+        $("<div>", {
+          class: "ml15 df aic plr5 ptb5 fs09 tac c6 bcd bss bl1",
+        }).append(
+          $("<div>", { class: "fs1 c6 mlr15", text: "Date range    From" }),
+          $("<input>", {
+            class: "fs1 plr15 bấmĐc bra10 cp w100 bni",
+            placeholder: "Từ ngày",
+            contenteditable: true,
+            style: "color: #9E0101; background: #DEDEDE",
+          }).chọnNgày({
+            nổi: true, //lựa chọn này thể hiện có cho làm nổi thời gian hay không
+            cuối: true,
+            ẩn: ["giờ", "phút", "giây"], // lựa chọn này để ẩn đi giờ phút giây, có thể cho ẩn đi để hiện giờ
+            địnhDạng: "DD/MM/YYYY", //đây là chọn định dạng ngày/tháng/năm
+            // mặcĐịnh: now().u, //đây là nơi cho lựa chọn ngày mặc định hiển thị
+            quáKhứ: true, //đây là nơi cho lựa chọn ngày trong quá khứ
+          }),
+          $("<div>", { class: "fs1 c6 mlr15", text: "To" }),
+          $("<input>", {
+            class: "fs1 plr15 bấmĐc bra10 cp w100 bni",
+            placeholder: "Đến ngày",
+            contenteditable: true,
+            style: "color: #9E0101; background: #DEDEDE",
+          }).chọnNgày({
+            cuối: true,
+
+            nổi: true, //lựa chọn này thể hiện có cho làm nổi thời gian hay không
+            ẩn: ["giờ", "phút", "giây"], // lựa chọn này để ẩn đi giờ phút giây, có thể cho ẩn đi để hiện giờ
+            địnhDạng: "DD/MM/YYYY", //đây là chọn định dạng ngày/tháng/năm
+            // mặcĐịnh: now().u, //đây là nơi cho lựa chọn ngày mặc định hiển thị
+            quáKhứ: true, //đây là nơi cho lựa chọn ngày trong quá khứ
+          })
+        ),
+        $.icon("search:: pa5 fs16 bra50i btn bấmĐc ml25")
+      );
+    // debugger;
+
+    W.find(".header")
+      .children("td:nth-child(2)")
+      .append(
+        $("<div>", {
+          class: "bấmĐc vamc bra5 pr boChọn",
+        }).append(
+          $.icon(
+            "check_box_outline_blank:: ffi usn bra3 tac fsn notranslate wh1e oh bscb dfn fs16 O vam mt-1"
+          ),
+          $("<input>", {
+            type: "checkbox",
+            class: "chọnDòng chọnTất chọnHếtDòng iCheck o0 ol bấmĐc",
+          }).tip("Chọn/Bỏ chọn tất cả dòng")
+        )
+      );
+
+    // H.bảng(
+    //   I,
+    //   {
+    //     // tiêuĐề:
+    //     //   "THEO DÕI KẾ HOẠCH CHẠY VÀ GIÁ TRỊ HỢP ĐỒNG (Giao diện xem 1 HĐ dạng dọc) ", // Tiêu đề bảng
+    //     cỡChữ: 12, // Cỡ chữ hiển thị trên toàn khung
+    //     mới: true, // Bảng kiểu mới
+    //     chân: false, // Chân bảng
+    //     khung: true, // Hiển thị khung → Nếu false → chỉ lần phần chứa giao diện khung bảng trở vào
+    //     href: false, // Không hiển thị URL
+    //     // cộtGộp: ộ, // Gộp đè cấu hình cột
+    //     // cộts:$.gộp(["chọn","chứcNăng","stt"],$.map(ộ,r2).slice(1)), // Danh sách ID cột cần hiển thị
+    //     nútBỏ: ["đóngKhung"], // Danh sách nút mặc định trên bảng cần loại bỏ
+    //     // ẩnCột:true,
+    //     ấ: {
+    //       // Cấu hình chung khung chứa
+    //     },
+    //     bảng: {
+    //       // Cấu hình bảng
+    //       mãNguồn: 1,
+    //       // { // Viết lại mã nguồn. hoặc xác định sử dụng mã nguồn
+    //       //     1:function(){
+    //       //         // Mã nguồn khởi tạo
+    //       //     },
+    //       //     // 2:function(){
+    //       //     //     // Mã nguồn thực thi
+    //       //     // },
+    //       // }
+    //       phânTrang: false, // Hiển thị phân trang
+    //       nútBỏ: ["đóngKhung"],
+    //       // sửaĐc:false,
+    //       tảiDần: true, // Hiển thị tải dần
+    //       trống: true,
+    //       chân: false,
+    //       sửaLớp: {
+    //         h400e: "lh13,-lh12",
+    //         nútTrái2: "lh13,df,aic",
+    //         tiêuĐềBảng: "-cl1,cb0",
+    //         giữa: "mr25",
+    //         dòng: "fs09",
+    //         bộLọc: "dn",
+    //       },
+    //       ẩnCột: true,
+    //     },
+    //   },
+    //   function () {
+    //     cl(111, H)
+    //     H.find("#" + I).sửaLớp("wmxc");
+    //     H.find(`#${I} > tbody`).css({
+    //       "font-size": "14px",
+    //     });
+    //     H.find(".trên").find(".sốTrang").closest(".df").sửaLớp("w1 plr15");
+    //   }
+    // );
   };
 
   this.khởiTạo = function () {};
