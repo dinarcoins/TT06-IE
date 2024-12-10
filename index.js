@@ -344,9 +344,6 @@ customTT06 = new (function () {
     });
 
     $("#đầu").find(".bgcf").sửaLớp("w20");
-    $("#slogan .trên").iVal("GOLDSUN FOCUS MEDIA").sửaLớp("fs15p").css({
-      color: "#1A1919",
-    });
 
     K.find(".chứa").before(
       $("<div>").append(
@@ -458,7 +455,7 @@ customTT06 = new (function () {
           )
         ),
         $("<div>", {
-          class: `menuContent bấmĐc mb5 ptb5 plr10 fwb df jcsb aic brr20 ${
+          class: `menuContent mb5 ptb5 plr10 fwb df jcsb aic brr20 ${
             hasChildren ? "bgcf bgcyh" : "cf c0h bra25h bgcyh"
           } ${O.cấp === 0 && "mb15"}`,
         }).append(
@@ -468,9 +465,8 @@ customTT06 = new (function () {
               .append($.icon("chevron_right:: fs16"))
               .click(function () {
                 const subMenu = result.children(".subMenu");
-                const icon = $(this); // Lấy chính icon hiện tại
+                const icon = $(this);
                 subMenu.slideToggle(300, function () {
-                  // Cập nhật icon sau khi slideToggle hoàn tất
                   icon.empty().append(
                     subMenu.is(":visible")
                       ? $.icon("expand_more:: fs16") // Icon mở rộng
@@ -492,14 +488,13 @@ customTT06 = new (function () {
     const menuTraiTren = function (item, index) {
       return $("<div>", {
         class: `ptb5 plr15 menuItemTop fwb fs09 c0 bgcyh bra10 df jcc aic bấmĐc mt5 ml-10 bóng tac`,
-        style: `zIndex: "${index}"; background-color: ${
+        style: `z-index: ${index}; background-color: ${
           index == 0 ? "#ED9718" : "#fff"
         }`,
       })
+        .tip(item.title)
         .append(
-          $.icon(`${item.icon}:: fs2 bấmĐc menuTraiTrenIcon dn`).tip(
-            item.title
-          ),
+          $.icon(`${item.icon}:: fs2 menuTraiTrenIcon dn`),
           $("<div>", { class: "menuTraiTrenText db", text: item.title })
         )
         .click(function () {
@@ -531,10 +526,12 @@ customTT06 = new (function () {
     );
 
     W.find(".trên").append(
-      $("<div>", { class: "w1 pl25 df jcsb aic mb10 mt15" }).append(
-        $("<div>", { class: "df jcsb fww w80" }).append(
+      $("<div>", { class: "w1 pl5 df jcsb aic mb10 mt15 fww" }).append(
+        $("<div>", { class: "df jcsb fww col-ld-9 col-xs-12" }).append(
           listMenuTableHeader.map(function (item, index) {
-            return $("<div>", { class: "df fs09 w16 wsn mr15 mt5" }).append(
+            return $("<div>", {
+              class: "df fs09 col-xs-3 col-lg-2 wsn mr15 mt5",
+            }).append(
               $("<div>", { class: "", text: `${index + 1}. ` }),
               $("<div>", { class: "", text: item.title }),
               $("<div>", {
